@@ -56,7 +56,7 @@ end
 --Time commands. I won't document these. Figure them out yourself :P
 minetest.register_chatcommand("morning",{
 	params = "",
-	privs = {time = true},
+	privs = {settime = true},
 	description = "Set time to morning",
 	func = function(name, param)
 		local player = minetest.env:get_player_by_name(name)
@@ -68,7 +68,7 @@ minetest.register_chatcommand("morning",{
 })
 minetest.register_chatcommand("noon",{
 	params = "",
-	privs = {time = true},
+	privs = {settime = true},
 	description = "Set time to noon",
 	func = function(name, param)
 		local player = minetest.env:get_player_by_name(name)
@@ -80,7 +80,7 @@ minetest.register_chatcommand("noon",{
 })
 minetest.register_chatcommand("evening",{
 	params = "",
-	privs = {time = true},
+	privs = {settime = true},
 	description = "Set time to evening",
 	func = function(name, param)
 		local player = minetest.env:get_player_by_name(name)
@@ -92,7 +92,7 @@ minetest.register_chatcommand("evening",{
 })
 minetest.register_chatcommand("night",{
 	params = "",
-	privs = {time = true},
+	privs = {settime = true},
 	description = "Set time to night",
 	func = function(name, param)
 		local player = minetest.env:get_player_by_name(name)
