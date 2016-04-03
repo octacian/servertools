@@ -36,7 +36,6 @@ minetest.register_on_newplayer(function(player)
 	if not player then
 		return
 	end
-	minetest.chat_send_all(Welcome_String.." "..player:get_player_name().."!")
 	if minetest.setting_get("static_spawnpoint") == nil or minetest.setting_get("static_spawnpoint") == "" then
 		return
 	end
@@ -46,7 +45,7 @@ end)
 --Make /spawn go to a spawnpoint set by admins if it exists.
 minetest.register_chatcommand("spawn", {
 	params = "",
-	privs = {se_player = true},
+	privs = {},
 	description = "Set the spawn point.",
 	func = function(name, param)
 	local player = minetest.env:get_player_by_name(name)
