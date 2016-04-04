@@ -149,11 +149,11 @@ install() {
   echo "|                                  Installing                                  |"
   echo "================================================================================"
   echo "Copying files..."
-  sudo cp -r ${cwd} /${rootDIR}/games/${subgame}/mods/server_tools
+  sudo cp -r ${cwd} /${rootDIR}/games/${subgame}/mods/${modname}
   echo "Changing file access rights..."
-  sudo chown -R root:root /${rootDIR}/games/${subgame}/mods/server_tools
-  sudo chmod -R +r /${rootDIR}/games/${subgame}/mods/server_tools
-  sudo chmod -R +x /${rootDIR}/games/${subgame}/mods/server_tools
+  sudo chown -R root:root /${rootDIR}/games/${subgame}/mods/${modname}
+  sudo chmod -R +r /${rootDIR}/games/${subgame}/mods/${modname}
+  sudo chmod -R +x /${rootDIR}/games/${subgame}/mods/${modname}
   echo ""
   echo "The installation is complete. The script will now exit."
 }
