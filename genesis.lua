@@ -1,26 +1,26 @@
---Set spawn command
-minetest.register_chatcommand("setspawn", {
+--Set Genesis Command
+minetest.register_chatcommand("setgenesis", {
 	params = "",
 	privs = {admin = true},
-	description = "Set the spawn point.",
+	description = "Set the Genesis point (beginning).",
 	func = function(name, param)
 		--Check for proper player [forbids console commands, not really needed]
 		local player = minetest.env:get_player_by_name(name)
 		if not player then
 			return
 		end
-		--Get player position and set spawn just below that just because it looks cooler.
+		--Get player position and set genesis just below that just because it looks cooler.
 		local pos = player:getpos()
 		pos.x = math.floor(0.5+pos.x)
 		pos.z = math.floor(0.5+pos.z)
 		minetest.setting_set("static_spawnpoint", minetest.pos_to_string(pos))
 
-		--Notify admin who set spawn.
-		minetest.chat_send_player(name, "Spawn set at, "..minetest.setting_get("static_spawnpoint"));
+		--Notify admin who set genesis.
+		minetest.chat_send_player(name, "Genesis point set at, "..minetest.setting_get("static_spawnpoint"));
 	end,
 })
 
---Make sure player spawns at set spawnpoint when he dies if it exists.
+--Make sure player initializes at set genesis when he hurts himself badly if it exists.
 minetest.register_on_respawnplayer(function(player)
 	if not player then
 		return
@@ -31,7 +31,7 @@ minetest.register_on_respawnplayer(function(player)
 	player:setpos(minetest.string_to_pos(minetest.setting_get("static_spawnpoint")))
 end)
 
---Make sure player spawns at set spawnpoint when he joins if it exists.
+--Make sure player initializes at set genesis when he joins if it exists.
 minetest.register_on_newplayer(function(player)
 	if not player then
 		return
@@ -42,11 +42,11 @@ minetest.register_on_newplayer(function(player)
 	player:setpos(minetest.string_to_pos(minetest.setting_get("static_spawnpoint")))
 end)
 
---Make /spawn go to a spawnpoint set by admins if it exists.
-minetest.register_chatcommand("spawn", {
+--Make /genesis go to a genesis point set by admins if it exists.
+minetest.register_chatcommand("genesis", {
 	params = "",
 	privs = {},
-	description = "Set the spawn point.",
+	description = "Initialize transportation to the Genesis.",
 	func = function(name, param)
 	local player = minetest.env:get_player_by_name(name)
 		if not player then
@@ -56,7 +56,8 @@ minetest.register_chatcommand("spawn", {
 			return
 		end
 		player:setpos(minetest.string_to_pos(minetest.setting_get("static_spawnpoint")))
+		minetest.chat_send_player(name, "Initializing transportation to the Genesis point...");
 	end
 })
 
-print("[Server_Tools] Player Spawn Module Loaded")
+print("[Server_Tools] Genesis Module Loaded")
