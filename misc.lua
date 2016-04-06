@@ -6,7 +6,7 @@ function clearinventory(name, param)
 		print(name.." has cleared his inventory.")
 		minetest.chat_send_player(name, 'Inventory Cleared!')
 	return
-	elseif minetest.check_player_privs(name, {se_clearinventory_admin=true}) then
+elseif minetest.check_player_privs(name, {admin=true}) then
 		local playername = minetest.env:get_player_by_name(param)
 		local inventory = {}
 		playername:get_inventory():set_list("main", inventory)
@@ -18,10 +18,10 @@ function clearinventory(name, param)
 		return false;
 	end
 end
-minetest.register_chatcommand('clearinv',{
+minetest.register_chatcommand('clear',{
 	description = 'Clear your inventory.',
 	params = "<playername> | name of player (optional)",
-	privs = {admin = true},
+	privs = {},
 	func = clearinventory
 })
 
