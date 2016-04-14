@@ -9,15 +9,15 @@
 # OR REPRODUCE THIS [CODE] IN ANY WAY WITHOUT DIRECT PERMISSION OF THE ORIGINAL
 # AUTHOR (Elijah Duffy).
 
+#GENERIC VARIABLES
 # Name of mod to be installed
 modname="server_tools"
 
 # Pre-Start Subgame Specification
 subgame="$1"
+#END: GENERIC VARIABLES
 
-# Default Root Directory
-rootDIR="/usr/share/games/minetest"
-
+#GENERIC FUNCTIONS
 # Default Minetest Root Directory cannot be Located
 rootError() {
   echo "Fatal error: ${error}."
@@ -52,13 +52,61 @@ fileError() {
 previousInstallFound() {
   clear
   printf '\e[8;24;80t'
-  echo "A previous installation of the ${modname} mod has neen found."
+  echo "A previous installation of the ${modname} mod has been found."
   read -p "Press enter to remove the old installation and continue : " null
   sudo rm -r ${rootDIR}/games/${subgame}/mods/${modname}
   midCheck;
 }
+#END: GENERIC FUNCTIONS
 
-# Directory(s) Accessible Pre Check
+# Check Root DIRs for Version
+version() {
+  clear
+  printf '\e[8;24;80t'
+  echo "Determining Minetest Version..."
+
+  # Confirm Version with User
+  confirmV() {
+    clear
+    printf '\e[8;24;80t'
+    echo "================================================================================"
+    echo "|                                    Version                                   |"
+    echo "================================================================================"
+    read -p "Please confirm that your Minetest installation is version 0.4.13 (y/n) : " prompt
+    echo ""
+    if [[ $prompt == "y" ]]
+      then
+        preCheck;
+      else
+        echo "Version Set to 0.4.12 or Older..."
+        rootDIR="/usr/share/games/minetest"
+        echo "RootDIR = ${rootDIR}"
+        sleep 2
+        preCheck;
+    fi
+  }
+
+  #Check for DIR in /usr/local/share/games/minetest
+  if [[ -d "/usr/local/share/minetest" ]]
+    then
+      echo "v0.4.13 Root DIR Located..."
+      rootDIR="/usr/local/share/minetest"
+      version="0.4.13"
+      confirmV;
+    elif [[ -d "/usr/share/games/minetest" ]]
+      then
+        echo "v0.4.12 Root DIR Located..."
+        rootDIR="/usr/share/games/minetest"
+        version="0.4.12"
+        preCheck;
+    else
+      echo "No Root DIR Located..."
+      sleep 2
+      rootError;
+  fi
+}
+
+# # Check DIRs Accessible
 preCheck() {
   clear
   printf '\e[8;24;80t'
@@ -93,6 +141,15 @@ preCheck() {
 subStall() {
   clear
   printf '\e[8;24;80t'
+  # Check is subgame has been specified through $1
+  if [[ $subgame == "" ]]
+    then
+      null=""
+    else
+      midCheck;
+  fi
+
+  # Interactive subgame determining
   echo "================================================================================"
   echo "|                                 Install to...                                |"
   echo "================================================================================"
@@ -105,6 +162,7 @@ subStall() {
   midCheck;
 }
 
+# Check DIRs Entered
 midCheck() {
   clear
   printf '\e[8;24;80t'
@@ -158,4 +216,4 @@ install() {
   echo "The installation is complete. The script will now exit."
 }
 
-preCheck;
+version;
