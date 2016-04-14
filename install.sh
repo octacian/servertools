@@ -1,13 +1,19 @@
 #! /bin/bash
 #
-#CREDIT:
-# Source Code: Elijah Duffy
-# Contact: enduffy2014@outlook.com
-#
 #LICENSE:
-# Copywrite 2016 enDEV. YOU MAY NOT UNDER ANY CIRCUMSTANCES EDIT, COPY, REDISTRIBUTE
-# OR REPRODUCE THIS [CODE] IN ANY WAY WITHOUT DIRECT PERMISSION OF THE ORIGINAL
-# AUTHOR (Elijah Duffy).
+# Copyright (c) 2016 Elijah Duffy
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+# and associated documentation files (the "Software"), to deal in the Software without restriction,
+# including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+# and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #GENERIC VARIABLES
 # Name of mod to be installed
@@ -144,22 +150,26 @@ subStall() {
   # Check is subgame has been specified through $1
   if [[ $subgame == "" ]]
     then
-      null=""
+      # Run subAsk()
+      subAsk;
     else
+      # Continue
       midCheck;
   fi
 
-  # Interactive subgame determining
-  echo "================================================================================"
-  echo "|                                 Install to...                                |"
-  echo "================================================================================"
-  echo "Choose a subgame to install the ${modname} mod to:"
-  cd ${rootDIR}/games
-  ls
-  read -p "Please enter the full name from the list above : " subgame
+  subAsk() {
+    # Interactive subgame determining
+    echo "================================================================================"
+    echo "|                                 Install to...                                |"
+    echo "================================================================================"
+    echo "Choose a subgame to install the ${modname} mod to:"
+    cd ${rootDIR}/games
+    ls
+    read -p "Please enter the full name from the list above : " subgame
 
-  # Continue
-  midCheck;
+    # Continue
+    midCheck;
+  }
 }
 
 # Check DIRs Entered
@@ -209,9 +219,9 @@ install() {
   echo "Copying files..."
   sudo cp -r ${cwd} /${rootDIR}/games/${subgame}/mods/${modname}
   echo "Changing file access rights..."
-  sudo chown -R root:root /${rootDIR}/games/${subgame}/mods/${modname}
-  sudo chmod -R +r /${rootDIR}/games/${subgame}/mods/${modname}
-  sudo chmod -R +x /${rootDIR}/games/${subgame}/mods/${modname}
+  sudo chown -R root:root ${rootDIR}/games/${subgame}/mods/${modname}
+  sudo chmod -R +r ${rootDIR}/games/${subgame}/mods/${modname}
+  sudo chmod -R +x ${rootDIR}/games/${subgame}/mods/${modname}
   echo ""
   echo "The installation is complete. The script will now exit."
 }
