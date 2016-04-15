@@ -150,14 +150,14 @@ subStall() {
   # Check is subgame has been specified through $1
   if [[ $subgame == "" ]]
     then
-      # Run subAsk()
-      subAsk;
+      # Run subQuery()
+      subQuery;
     else
       # Continue
       midCheck;
   fi
 
-  subAsk() {
+  subQuery() {
     # Interactive subgame determining
     echo "================================================================================"
     echo "|                                 Install to...                                |"
