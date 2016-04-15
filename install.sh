@@ -45,7 +45,7 @@ subLost() {
   echo "${subgame} subgame directory cannot be located."
   echo ""
   read -p "Press enter to select a new subgame : " null
-  subStall;
+  subQuery;
 }
 
 # Dirrectory cannot be Located
@@ -112,7 +112,7 @@ version() {
   fi
 }
 
-# # Check DIRs Accessible
+# Check DIRs Accessible
 preCheck() {
   clear
   printf '\e[8;24;80t'
@@ -147,6 +147,17 @@ preCheck() {
 subStall() {
   clear
   printf '\e[8;24;80t'
+  subQuery() {
+    # Interactive subgame determining
+    echo "================================================================================"
+    echo "|                                 Install to...                                |"
+    echo "================================================================================"
+    echo "Choose a subgame to install the ${modname} mod to:"
+    cd ${rootDIR}/games
+    ls
+    read -p "Please enter the full name from the list above : " subgame
+  }
+
   # Check is subgame has been specified through $1
   if [[ $subgame == "" ]]
     then
@@ -157,26 +168,14 @@ subStall() {
       midCheck;
   fi
 
-  subQuery() {
-    # Interactive subgame determining
-    echo "================================================================================"
-    echo "|                                 Install to...                                |"
-    echo "================================================================================"
-    echo "Choose a subgame to install the ${modname} mod to:"
-    cd ${rootDIR}/games
-    ls
-    read -p "Please enter the full name from the list above : " subgame
-
     # Continue
     midCheck;
-  }
 }
 
 # Check DIRs Entered
 midCheck() {
   clear
   printf '\e[8;24;80t'
-
   # Check specified subgame DIR
   if [[ -d "${rootDIR}/games/${subgame}" ]]
     then
