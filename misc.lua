@@ -93,4 +93,12 @@ minetest.register_chatcommand("night", {
 	end,
 })
 
+-- [CHAT COMMAND] Update node - /update x y z modname:nodename
+minetest.register_chatcommand("update", {
+	description = "Set the node of a position.",
+	params = "<x> <y> <z> <new_nodename> | position of update, node to place at that position",
+	privs = {update = true},
+	func = update_node,
+})
+
 minetest.log("action", "[Server_Tools] Miscellaneous Module Loaded") --print to log module loaded
