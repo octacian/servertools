@@ -1,7 +1,7 @@
 -- mods/server_tools/functions.lua
 
 -- Clear Inventory
-function clearinventory(name, param)
+function server_tools.clearinventory(name, param)
 	if param == nil or param == "" then
 		local playername = minetest.env:get_player_by_name(name)
 		local inventory = {}
@@ -57,3 +57,5 @@ function server_tools.update_node(name, param, x, y, z)
 		end
 	end
 end
+
+minetest.log("action", "[Server_Tools] Functions Loaded!") -- print to log

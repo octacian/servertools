@@ -3,7 +3,7 @@ minetest.register_chatcommand("clear", {
 	description = 'Clear your inventory.',
 	params = "<playername> | name of player (optional)",
 	privs = {},
-	func = clearinventory
+	func = server_tools.clearinventory
 })
 
 -- [CHAT COMMAND] Heal - /heal param
@@ -98,7 +98,7 @@ minetest.register_chatcommand("update", {
 	description = "Set the node of a position.",
 	params = "<x> <y> <z> <new_nodename> | position of update, node to place at that position",
 	privs = {update = true},
-	func = update_node,
+	func = server_tools.update_node,
 })
 
 minetest.log("action", "[Server_Tools] Miscellaneous Module Loaded") --print to log module loaded
