@@ -17,7 +17,7 @@
 
 #GENERIC VARIABLES
 # Name of mod to be installed
-modname="server_tools"
+modname="servertools"
 
 # Pre-Start Subgame Specification
 subgame="$1"

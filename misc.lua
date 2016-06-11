@@ -3,7 +3,7 @@ minetest.register_chatcommand("clear", {
 	description = 'Clear your inventory.',
 	params = "<playername> | name of player (optional)",
 	privs = {},
-	func = servertools.clearinventory
+	func = servertools.clearinv
 })
 
 -- [CHAT COMMAND] Heal - /heal param
@@ -14,13 +14,13 @@ minetest.register_chatcommand("heal", {
 	--Check if sender wants to heal someone other than himself
 	if param == "" or param == nil then
 		--If he dosn't, heal the sender
-		local player = minetest.env:get_player_by_name(name)
+		local player = minetest.get_player_by_name(name)
 		player:set_hp(20)
 		minetest.chat_send_player(name, "You have been healed.")
 		minetest.log("action", "[ServerTools] "..name.." healed themself.") --print to log
 	else
 		--If he is healing someone else, check and see if that someone exists.
-		local player = minetest.env:get_player_by_name(param)
+		local player = minetest.get_player_by_name(param)
 		if player == "" or player == nil then
 			minetest.chat_send_player(name, "Invalid player!")
 			minetest.log("action", "[ServerTools] "..name.." attempted to heal invalid player "..param) --print to log

@@ -1,4 +1,4 @@
-server_tools = {}
+servertools = {}
 local modpath = minetest.get_modpath("servertools")
 -- Load Modules
 dofile(modpath.."/functions.lua")

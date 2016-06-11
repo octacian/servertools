@@ -1,22 +1,22 @@
 -- mods/servertools/functions.lua
 
 -- Clear Inventory
-function servertools.clearinventory(name, param)
+function servertools.clearinv(name, param)
 	if param == nil or param == "" then
-		local playername = minetest.env:get_player_by_name(name)
+		local playername = minetest.get_player_by_name(name)
 		local inventory = {}
 		playername:get_inventory():set_list("main", inventory)
 		minetest.log("action", "[ServerTools] "..name.." cleared their inventory.") --print to log
 		minetest.chat_send_player(name, 'Inventory Cleared!')
 	return
-elseif minetest.check_player_privs(name, {admin=true}) then
+elseif minetest.check_player_privs(name, {servertools=true}) then
 	--If he is healing someone else, check and see if that someone exists.
-	local player = minetest.env:get_player_by_name(param)
+	local player = minetest.get_player_by_name(param)
 	if player == "" or player == nil then
 		minetest.chat_send_player(name, "Invalid player!")
 		minetest.log("action", "[ServerTools] "..name.." attempted to clear the inventory of invalid player "..param) --print to log
 	else
-		local playername = minetest.env:get_player_by_name(param)
+		local playername = minetest.get_player_by_name(param)
 		local inventory = {}
 		playername:get_inventory():set_list("main", inventory)
 		minetest.log("action", "[ServerTools] "..name.." cleared "..param.."'s inventory.")
