@@ -95,8 +95,8 @@ minetest.register_chatcommand("night", {
 
 -- [CHAT COMMAND] Update node - /update x y z modname:nodename
 minetest.register_chatcommand("update", {
-	description = "Set the node of a position.",
-	params = "<x> <y> <z> <new_nodename> | position of update, node to place at that position",
+	description = "Place/Update a node at a coordinate.",
+	params = "<new_nodename> <x> <y> <z> | item string of new node, coordinates",
 	privs = {update = true},
 	func = server_tools.update_node,
 })

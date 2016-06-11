@@ -31,28 +31,36 @@ elseif minetest.check_player_privs(name, {admin=true}) then
 end
 
 -- Update Block
-function server_tools.update_node(name, param, x, y, z)
+function server_tools.update_node(name, param)
   -- variables
   local player = minetest.get_player_by_name(name) -- player name
-	local item_string_type = minetest.registered_items[param].type -- item string type
+	local node, p = string.match(param, "^([^ ]+) *(.*)$")
+	local p = minetest.string_to_pos(p)
+
 	-- confirm node param
-	if minetest.registered_items[param] == nil or minetest.registered_items[param] == "" then
-		minetest.chat_send_player(name, "Invalid item string. Please try again.") --print to chat
-		minetest.log("action", "[Server_Tools] "..name.." tried to update a node with invalid item string: "..param) --print to log
+	if minetest.registered_items[node] == nil then
+		minetest.chat_send_player(name, "Please enter a valid item string.") --print to chat
+		minetest.log("action", "[Server_Tools] "..name.." tried to update a node with an invalid item string.") --print to log
 	else
-		-- make sure item string is not a craftitem of tool
-		if item_string_type == "tool" or item_string_type == "craftitem" then
-			minetest.chat_send_player(name, "Item string cannot be a "..item_string_type) --print to chat
-			minetest.log("action", "[Server_Tools] "..name.." tried to update a node to "..item_string_type) --print to log
+		local item_string_type = minetest.registered_items[node].type -- item string type
+		-- make sure item string is not a craftitem or tool
+		if item_string_type == "tool" or item_string_type == "craft" then
+			minetest.chat_send_player(name, "Item string is of invalid type "..item_string_type..".") --print to chat
+			minetest.log("action", "[Server_Tools] "..name.." tried to update to "..item_string_type..".") --print to log
 		else
+			if p == nil or p == "" then
+				minetest.chat_send_player(name, "Please enter valid coordinates.") --print to chat
+				minetest.log("action", "[Server_Tools] "..name.." tried to update a node with invalid coordinates.") --print to log
+				return
+			end
 			-- confirm position params
-		  if x == "" or x == nil or y == "" or z == nil or z == "" or z == nil then
+		  if p.x == nil or p.y == nil or p.y == nil or p.z == nil then
 		    -- print error to chat and log
-		    minetest.chat_send_player(name, "Invalid position coordinates. Please try again.") -- print to chat
-		    minetest.log("action", "[Server_Tools] "..name.." tried to update a node using invalid coordinates, "..x..", "..y..", "..z..".") --print to log
+		    minetest.chat_send_player(name, "Please enter valid coordinates.") -- print to chat
+		    minetest.log("action", "[Server_Tools] "..name.." tried to update a node with invalid coordinates.") --print to log
 		  else
 		    -- update node
-				minetest.set_node({x = x, y = y, z = z}, {name = param})
+				minetest.set_node(p, {name = node})
 		  end
 		end
 	end
