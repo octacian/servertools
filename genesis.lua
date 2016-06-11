@@ -12,14 +12,14 @@ minetest.register_chatcommand("setgenesis", {
 		--Get player position and set genesis just below that just because it looks cooler.
 		local pos = vector.round(player:getpos())
 		pos.y = pos.y + 0.5
-		
+
 		local pos_str = minetest.pos_to_string(pos)
 		minetest.setting_set("static_genesis", pos_str)
 
-		--Notify admin who set genesis.
-		minetest.chat_send_player(name, "Genesis point set to position "..pos_str);
 		--Print to Log
 		minetest.log("action", "[ServerTools] Genesis point set to position "..pos_str.." by "..name) --print to log
+		--Notify admin who set genesis.
+		return true, "Genesis point set to position "..pos_str
 	end,
 })
 
@@ -60,12 +60,13 @@ minetest.register_chatcommand("genesis", {
 		local genesis = minetest.setting_get("static_genesis")
 		local genesis_pos = minetest.string_to_pos(genesis)
 		if not genesis_pos then
-			return
+			return false, "Static genesis point is not set or wrongly formatted."
 		end
-		player:setpos(genesis_pos)
-		minetest.chat_send_player(name, "Initializing transportation to the Genesis point...");
 		--Print to Log
 		minetest.log("action", "[ServerTools] "..name.." transported to the genesis at "..genesis) --print to log
+
+		player:setpos(genesis_pos)
+		return true, "Initializing transportation to the Genesis point..."
 	end
 })
 
