@@ -3,7 +3,7 @@ minetest.register_chatcommand("clear", {
 	description = 'Clear your inventory.',
 	params = "<playername> | name of player (optional)",
 	privs = {},
-	func = server_tools.clearinventory
+	func = servertools.clearinventory
 })
 
 -- [CHAT COMMAND] Heal - /heal param
@@ -17,19 +17,19 @@ minetest.register_chatcommand("heal", {
 		local player = minetest.env:get_player_by_name(name)
 		player:set_hp(20)
 		minetest.chat_send_player(name, "You have been healed.")
-		minetest.log("action", "[Server_Tools] "..name.." healed themself.") --print to log
+		minetest.log("action", "[ServerTools] "..name.." healed themself.") --print to log
 	else
 		--If he is healing someone else, check and see if that someone exists.
 		local player = minetest.env:get_player_by_name(param)
 		if player == "" or player == nil then
 			minetest.chat_send_player(name, "Invalid player!")
-			minetest.log("action", "[Server_Tools] "..name.." attempted to heal invalid player "..param) --print to log
+			minetest.log("action", "[ServerTools] "..name.." attempted to heal invalid player "..param) --print to log
 		else
 			--If player exists, set his HP to 20 and notify him and the sender.
 			player:set_hp(20)
 			minetest.chat_send_player(param, "You have been healed.")
 			minetest.chat_send_player(name, "You have healed "..param.."")
-			minetest.log("action", "[Server_Tools] "..name.." healed "..param) --print to log
+			minetest.log("action", "[ServerTools] "..name.." healed "..param) --print to log
 		end
 	end
 end
@@ -47,7 +47,7 @@ minetest.register_chatcommand("morning", {
 			return
 		end
 		minetest.env:set_timeofday(0.22)
-		minetest.log("action", "[Server_Tools] "..player:get_player_name().." set the time to morning.") --print to log
+		minetest.log("action", "[ServerTools] "..player:get_player_name().." set the time to morning.") --print to log
 	end,
 })
 -- [CHAT COMMAND] Noon (0.5) - /noon
@@ -61,7 +61,7 @@ minetest.register_chatcommand("noon", {
 			return
 		end
 		minetest.env:set_timeofday(0.5)
-		minetest.log("action", "[Server_Tools] "..player:get_player_name().." set the time to noon.") --print to log
+		minetest.log("action", "[ServerTools] "..player:get_player_name().." set the time to noon.") --print to log
 	end,
 })
 -- [CHAT COMMAND] Evening (0.77) - /evening
@@ -75,7 +75,7 @@ minetest.register_chatcommand("evening", {
 			return
 		end
 		minetest.env:set_timeofday(0.77)
-		minetest.log("action", "[Server_Tools] "..player:get_player_name().." set the time to evening.") --print to log
+		minetest.log("action", "[ServerTools] "..player:get_player_name().." set the time to evening.") --print to log
 	end,
 })
 -- [CHAT COMMAND] Night (0) - /night
@@ -89,7 +89,7 @@ minetest.register_chatcommand("night", {
 			return
 		end
 		minetest.env:set_timeofday(0)
-		minetest.log("action", "[Server_Tools] "..player:get_player_name().." set the time to night.") --print to log
+		minetest.log("action", "[ServerTools] "..player:get_player_name().." set the time to night.") --print to log
 	end,
 })
 
@@ -98,7 +98,7 @@ minetest.register_chatcommand("update", {
 	description = "Place/Update a node at a coordinate.",
 	params = "<new_nodename> <x> <y> <z> | item string of new node, coordinates",
 	privs = {update = true},
-	func = server_tools.update_node,
+	func = servertools.update_node,
 })
 
-minetest.log("action", "[Server_Tools] Miscellaneous Module Loaded") --print to log module loaded
+minetest.log("action", "[ServerTools] Miscellaneous Module Loaded") --print to log module loaded

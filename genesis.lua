@@ -18,7 +18,7 @@ minetest.register_chatcommand("setgenesis", {
 		--Notify admin who set genesis.
 		minetest.chat_send_player(name, "Genesis point set at "..minetest.setting_get("static_genesis"));
 		--Print to Log
-		minetest.log("action", "[Server_Tools] Genesis point set at "..minetest.setting_get("static_genesis")..", by "..player:get_player_name()) --print to log
+		minetest.log("action", "[ServerTools] Genesis point set at "..minetest.setting_get("static_genesis")..", by "..player:get_player_name()) --print to log
 	end,
 })
 
@@ -60,8 +60,8 @@ minetest.register_chatcommand("genesis", {
 		player:setpos(minetest.string_to_pos(minetest.setting_get("static_genesis")))
 		minetest.chat_send_player(name, "Initializing transportation to the Genesis point...");
 		--Print to Log
-		minetest.log("action", "[Server_Tools] "..player:get_player_name().." transported to the genesis at "..minetest.setting_get("static_genesis")) --print to log
+		minetest.log("action", "[ServerTools] "..player:get_player_name().." transported to the genesis at "..minetest.setting_get("static_genesis")) --print to log
 	end
 })
 
-minetest.log("action", "[Server_Tools] Genesis Module Loaded") --print to log module loaded
+minetest.log("action", "[ServerTools] Genesis Module Loaded") --print to log module loaded
