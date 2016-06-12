@@ -66,4 +66,13 @@ function servertools.update_node(name, param)
 	end
 end
 
+-- get ip
+function servertools.get_ip(name, param)
+	local ip = minetest.get_player_ip(param)
+	-- check if player specified by param exists
+	if ip then
+		minetest.chat_send_player(name, param.."'s IP is "..ip)
+		minetest.log("action", "[ServerTools] "..param.."'s IP is "..ip.." (requested by "..name..").")			
+end
+
 minetest.log("action", "[ServerTools] Functions Loaded!") -- print to log

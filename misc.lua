@@ -1,4 +1,4 @@
--- [CHAT COMMAND] Clear Inventory - /clear
+-- [command] Clear Inventory - /clear
 minetest.register_chatcommand("clear", {
 	description = 'Clear your inventory.',
 	params = "<playername> | name of player (optional)",
@@ -6,7 +6,7 @@ minetest.register_chatcommand("clear", {
 	func = servertools.clearinv
 })
 
--- [CHAT COMMAND] Heal - /heal param
+-- [command] Heal - /heal param
 minetest.register_chatcommand("heal", {
 	description = "Restore full health to anyone.",
 	privs = {heal = true},
@@ -36,7 +36,7 @@ end
 })
 
 -- Time Commands
--- [CHAT COMMAND] Morning (0.22) - /morning
+-- [command] Morning (0.22) - /morning
 minetest.register_chatcommand("morning", {
 	params = "",
 	privs = {settime = true},
@@ -50,7 +50,7 @@ minetest.register_chatcommand("morning", {
 		minetest.log("action", "[ServerTools] "..player:get_player_name().." set the time to morning.") --print to log
 	end,
 })
--- [CHAT COMMAND] Noon (0.5) - /noon
+-- [command] Noon (0.5) - /noon
 minetest.register_chatcommand("noon", {
 	params = "",
 	privs = {settime = true},
@@ -64,7 +64,7 @@ minetest.register_chatcommand("noon", {
 		minetest.log("action", "[ServerTools] "..player:get_player_name().." set the time to noon.") --print to log
 	end,
 })
--- [CHAT COMMAND] Evening (0.77) - /evening
+-- [command] Evening (0.77) - /evening
 minetest.register_chatcommand("evening", {
 	params = "",
 	privs = {settime = true},
@@ -78,7 +78,7 @@ minetest.register_chatcommand("evening", {
 		minetest.log("action", "[ServerTools] "..player:get_player_name().." set the time to evening.") --print to log
 	end,
 })
--- [CHAT COMMAND] Night (0) - /night
+-- [command] Night (0) - /night
 minetest.register_chatcommand("night", {
 	params = "",
 	privs = {settime = true},
@@ -93,12 +93,20 @@ minetest.register_chatcommand("night", {
 	end,
 })
 
--- [CHAT COMMAND] Update node - /update x y z modname:nodename
+-- [command] Update node - /update x y z modname:nodename
 minetest.register_chatcommand("update", {
 	description = "Place/Update a node at a coordinate.",
 	params = "<new_nodename> <x> <y> <z> | item string of new node, coordinates",
 	privs = {update = true},
 	func = servertools.update_node,
+})
+
+-- [command] IP (get IP of player)- /ip player
+minetest.register_chatcommand("ip", {
+	privs = { server = true },
+	description = "Get IP of any player."
+	params = "/update <player> | player username"
+	func = servertools.get_ip,
 })
 
 minetest.log("action", "[ServerTools] Miscellaneous Module Loaded") --print to log module loaded
