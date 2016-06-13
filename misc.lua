@@ -104,8 +104,8 @@ minetest.register_chatcommand("update", {
 -- [command] IP (get IP of player)- /ip player
 minetest.register_chatcommand("ip", {
 	privs = { server = true },
-	description = "Get IP of any player."
-	params = "/update <player> | player username"
+	description = "Get IP of any player.",
+	params = "/update <player> | player username",
 	func = servertools.get_ip,
 })
 

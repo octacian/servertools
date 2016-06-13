@@ -72,7 +72,8 @@ function servertools.get_ip(name, param)
 	-- check if player specified by param exists
 	if ip then
 		minetest.chat_send_player(name, param.."'s IP is "..ip)
-		minetest.log("action", "[ServerTools] "..param.."'s IP is "..ip.." (requested by "..name..").")			
+		minetest.log("action", "[ServerTools] "..param.."'s IP is "..ip.." (requested by "..name..").")
+	end
 end
 
 minetest.log("action", "[ServerTools] Functions Loaded!") -- print to log
