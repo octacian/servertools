@@ -5,20 +5,21 @@ minetest.register_chatcommand("setgenesis", {
 	description = "Set the Genesis point (beginning).",
 	func = function(name, param)
 		--Check for proper player [forbids console commands, not really needed]
-		local player = minetest.env:get_player_by_name(name)
+		local player = minetest.get_player_by_name(name)
 		if not player then
 			return
 		end
 		--Get player position and set genesis just below that just because it looks cooler.
-		local pos = player:getpos()
-		pos.x = math.floor(0.5+pos.x)
-		pos.z = math.floor(0.5+pos.z)
-		minetest.setting_set("static_genesis", minetest.pos_to_string(pos))
+		local pos = vector.round(player:getpos())
+		pos.y = pos.y + 0.5
 
-		--Notify admin who set genesis.
-		minetest.chat_send_player(name, "Genesis point set at "..minetest.setting_get("static_genesis"));
+		local pos_str = minetest.pos_to_string(pos)
+		minetest.setting_set("static_genesis", pos_str)
+
 		--Print to Log
-		minetest.log("action", "[ServerTools] Genesis point set at "..minetest.setting_get("static_genesis")..", by "..player:get_player_name()) --print to log
+		minetest.log("action", "[ServerTools] Genesis point set to position "..pos_str.." by "..name) --print to log
+		--Notify admin who set genesis.
+		return true, "Genesis point set to position "..pos_str
 	end,
 })
 
@@ -27,10 +28,11 @@ minetest.register_on_respawnplayer(function(player)
 	if not player then
 		return
 	end
-	if minetest.setting_get("static_genesis") == nil or minetest.setting_get("static_genesis") == "" then
+	local genesis_pos = minetest.string_to_pos(minetest.setting_get("static_genesis"))
+	if not genesis_pos then
 		return
 	end
-	player:setpos(minetest.string_to_pos(minetest.setting_get("static_genesis")))
+	player:setpos(genesis_pos)
 end)
 
 --Make sure player initializes at set genesis when he joins if it exists.
@@ -38,10 +40,11 @@ minetest.register_on_newplayer(function(player)
 	if not player then
 		return
 	end
-	if minetest.setting_get("static_genesis") == nil or minetest.setting_get("static_genesis") == "" then
+	local genesis_pos = minetest.string_to_pos(minetest.setting_get("static_genesis"))
+	if not genesis_pos then
 		return
 	end
-	player:setpos(minetest.string_to_pos(minetest.setting_get("static_genesis")))
+	player:setpos(genesis_pos)
 end)
 
 --Make /genesis go to a genesis point set by admins if it exists.
@@ -50,17 +53,20 @@ minetest.register_chatcommand("genesis", {
 	privs = {},
 	description = "Initialize transportation to the Genesis.",
 	func = function(name, param)
-	local player = minetest.env:get_player_by_name(name)
+		local player = minetest.get_player_by_name(name)
 		if not player then
 			return
 		end
-		if minetest.setting_get("static_genesis") == nil or minetest.setting_get("static_genesis") == "" then
-			return
+		local genesis = minetest.setting_get("static_genesis")
+		local genesis_pos = minetest.string_to_pos(genesis)
+		if not genesis_pos then
+			return false, "Static genesis point is not set or wrongly formatted."
 		end
-		player:setpos(minetest.string_to_pos(minetest.setting_get("static_genesis")))
-		minetest.chat_send_player(name, "Initializing transportation to the Genesis point...");
 		--Print to Log
-		minetest.log("action", "[ServerTools] "..player:get_player_name().." transported to the genesis at "..minetest.setting_get("static_genesis")) --print to log
+		minetest.log("action", "[ServerTools] "..name.." transported to the genesis at "..genesis) --print to log
+
+		player:setpos(genesis_pos)
+		return true, "Initializing transportation to the Genesis point..."
 	end
 })
 
