@@ -41,21 +41,21 @@ function servertools.create_file(name, path)
 end
 
 -- write to file
-function servertools.write_file(data, name, path)
+function servertools.write_file(data, name, path, serialize)
   check_path(name, path) -- check path
   local f = io.open(name, "w") -- open file for writing
-  local data = minetest.serialize(data) -- serialize data
+  if serialize == true then local data = minetest.serialize(data) end -- serialize data
   f:write(data) -- write data
   f:close() -- close file
   st.log('Wrote "'..data..'" to '..name) -- log
 end
 
 -- load file
-function servertools.load_file(name, path)
+function servertools.load_file(name, path, deserialize)
   check_path(name, path) -- check path
   local f = io.open(name, "r") -- open file for reading
   local data = f:read() -- read and store file data in variable data
-  local data = minetest.deserialize(data)
+  if deserialize == true then local data = minetest.deserialize(data) end -- deserialize data
   return data -- return file contents
 end
 
