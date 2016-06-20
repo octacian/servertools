@@ -44,7 +44,7 @@ end
 function servertools.write_file(data, name, path)
   check_path(name, path) -- check path
   local f = io.open(name, "w") -- open file for writing
-  minetest.serialize(data) -- serialize data
+  local data = minetest.serialize(data) -- serialize data
   f:write(data) -- write data
   f:close() -- close file
   st.log('Wrote "'..data..'" to '..name) -- log
@@ -55,7 +55,7 @@ function servertools.load_file(name, path)
   check_path(name, path) -- check path
   local f = io.open(name, "r") -- open file for reading
   local data = f:read() -- read and store file data in variable data
-  minetest.deserialize(data)
+  local data = minetest.deserialize(data)
   return data -- return file contents
 end
 
