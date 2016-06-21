@@ -12,11 +12,12 @@ function servertools.log(content, log_type)
   minetest.log(log_type, "[ServerTools] "..content)
 end
 
--- load modules
+-- load default modules
+dofile(modpath.."/data.lua")
 dofile(modpath.."/functions.lua")
 dofile(modpath.."/privs.lua")
+
 dofile(modpath.."/genesis.lua")
 dofile(modpath.."/misc.lua")
-dofile(modpath.."/data.lua")
 
 minetest.log("action", "[ServerTools] Enabled Modules Loaded!") --print to log enabled modules loaded

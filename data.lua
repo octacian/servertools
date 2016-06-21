@@ -24,6 +24,8 @@ function servertools.initdata()
   f:close() -- close file
 end
 
+servertools.initdata() -- initialize world data directory
+
 -- check if file exists
 function servertools.check_file(name, path)
   local f = io.open(path.."/"..name, "r") -- open file
