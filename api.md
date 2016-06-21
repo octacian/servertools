@@ -33,12 +33,22 @@ Create file in location specified by `path`. Returns true if already exists, not
 ### write_file
 **Usage:** `servertools.write_file(path, data, serialize)`
 
-Write data to file. File path is specified in `path`. Data to write is specified with field `data` and supports any value including strings, booleans, and tables. The `serialize` option tells ServerTools whether or not to run `minetest.serialize` on the data before writing, and is by default set to `true` if left blank.
+Write data to file. File path is specified in `path`. Data to write is specified with field `data` and supports any value including strings, booleans, and integers. The `serialize` option tells ServerTools whether or not to run `minetest.serialize` on the data before writing, and is by default set to `true` if left blank.
 
 ### load_file
 **Usage:** `servertools.load_file(path, deserialize)`
 
-Load data from file (`path`) and return through output variable `data`. The `deserialize` option tells ServerTools whether or not to run `minetest.deserialize` on the data before returning, and is by default set to `true` if left blank.
+Load data from file (`path`) and return through variable `data`. The `deserialize` option tells ServerTools whether or not to run `minetest.deserialize` on the data before returning, and is by default set to `true` if left blank.
+
+### write_table
+**Usage:** `servertools.write_table(path, table)`
+
+Write table to file. File path is specified in `path`. Table to write is specified with field `table` and is designed for use with tables. The only difference between `write_table` and `write_file` is that `write_table` always serializes the data with `minetest.serialize` before writing because tables cannot be directly written to files, however, they must first be converted to strings through serialization.
+
+### load_table
+**Usage:** `servertools.load_table(path)`
+
+Load table from file (`path`) and return through variable `table`. The only difference between `load_table` and `load_file` is that `load_table` always deserializes the data with `minetest.deserialize` to convert previously written string back to a table. 
 
 ### dofile
 **Usage:** `servertools.dofile(path)`
