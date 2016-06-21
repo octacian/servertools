@@ -14,46 +14,36 @@ function servertools.initdata()
   f:close() -- close file
 end
 
--- check for path
-local function check_path(name, path)
-  if path then name = path.."/"..name else name = modpath.."/"..name end
-  return name -- return completed name
-end
-
 -- check if file exists
 function servertools.check_file(name, path)
-  check_path(name, path) -- check path
-  local f = io.open(name, "r") -- open file
+  local f = io.open(path.."/"..name, "r") -- open file
   if f ~= nil then io.close(f) return true else return false end
 end
 
 -- create file
 function servertools.create_file(name, path)
-  check_path(name, path) -- check path
   -- check if file already exists
-  if st.check_file(name) == true then
-    st.log("File ("..name..") already exists.") -- log
+  if st.check_file(path.."/"..name) == true then
+    st.log("File ("..path.."/"..name..") already exists.") -- log
     return true -- exit and return
   end
   local f = io.open(name, "w") -- create file
   f:close() -- close file
-  st.log("Created file "..name) -- log
+  st.log("Created file "..path.."/"..name) -- log
 end
 
 -- write to file
 function servertools.write_file(data, name, path, serialize)
-  check_path(name, path) -- check path
-  local f = io.open(name, "w") -- open file for writing
+  local f = io.open(..path.."/"..name, "w") -- open file for writing
   if serialize == true then local data = minetest.serialize(data) end -- serialize data
   f:write(data) -- write data
   f:close() -- close file
-  st.log('Wrote "'..data..'" to '..name) -- log
+  st.log('Wrote "'..data..'" to '..path.."/"..name) -- log
 end
 
 -- load file
 function servertools.load_file(name, path, deserialize)
-  check_path(name, path) -- check path
-  local f = io.open(name, "r") -- open file for reading
+  local f = io.open(..path.."/"..name, "r") -- open file for reading
   local data = f:read() -- read and store file data in variable data
   if deserialize == true then local data = minetest.deserialize(data) end -- deserialize data
   return data -- return file contents
@@ -63,10 +53,10 @@ end
 function servertools.dofile(name, path)
   -- check if file exists
   if servertools.check_file(name, path) == true then
-    dofile(path..name)
+    dofile(..path.."/"..name)
     return true -- return true, successful
   else
-    st.log("File"..path.."/"..name.." does not exist."
+    st.log("File "..path.."/"..name.." does not exist."
     return false -- return false, unsuccessful
   end
 end
