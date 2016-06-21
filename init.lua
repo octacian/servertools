@@ -1,7 +1,10 @@
 -- global variables
 servertools = {}
-st = servertools -- shortcut for servertools functions
-servertools.modname = minetest.get_current_modname() -- modname
+st = servertools -- shortcut for servertools functions and variables
+-- global path variables
+servertools.modpath = minetest.get_modpath("servertools") -- modpath
+-- local variables
+local modpath = servertools.modpath
 
 -- logger
 function servertools.log(content, log_type)
