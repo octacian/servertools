@@ -2,8 +2,6 @@
 servertools = {}
 st = servertools -- shortcut for servertools functions
 servertools.modname = minetest.get_current_modname() -- modname
-servertools.modpath = minetest.get_modpath(modname) -- modpath
-servetools.datapath = worldpath.."/"..minetest.get_worldpath(modname) -- path for data storage
 
 -- logger
 function servertools.log(content, log_type)

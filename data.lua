@@ -1,6 +1,11 @@
 -- mods/servertools/data.lua
 -- data storage api
 
+-- path variables
+servertools.modpath = minetest.get_modpath(modname) -- modpath
+servertools.worldpath = minetest.get_worldpath(modname) -- worldpath
+servertools.datapath = worldpath.."/servertools" -- path for general servertools data
+
 -- check if servertools world folder exists
 function servertools.initdata()
   local f = io.open(datapath)
