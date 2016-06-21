@@ -27,48 +27,48 @@ end
 servertools.initdata() -- initialize world data directory
 
 -- check if file exists
-function servertools.check_file(name, path)
-  local f = io.open(path.."/"..name, "r") -- open file
+function servertools.check_file(path)
+  local f = io.open(path, "r") -- open file
   if f ~= nil then f:close() return true else return false end
 end
 
 -- create file
-function servertools.create_file(name, path)
+function servertools.create_file(path)
   -- check if file already exists
-  if servertools.check_file(name, path) == true then
-    servertools.log("File ("..path.."/"..name..") already exists.") -- log
+  if servertools.check_file(path) == true then
+    servertools.log("File ("..path..") already exists.") -- log
     return true -- exit and return
   end
-  local f = io.open(path.."/"..name, "w") -- create file
+  local f = io.open(path, "w") -- create file
   f:close() -- close file
-  servertools.log("Created file "..path.."/"..name) -- log
+  servertools.log("Created file "..path) -- log
 end
 
 -- write to file
-function servertools.write_file(data, name, path, serialize)
-  local f = io.open(path.."/"..name, "w") -- open file for writing
+function servertools.write_file(path, data, serialize)
+  local f = io.open(path, "w") -- open file for writing
   if serialize == true then local data = minetest.serialize(data) end -- serialize data
   f:write(data) -- write data
   f:close() -- close file
-  servertools.log('Wrote "'..data..'" to '..path.."/"..name) -- log
+  servertools.log('Wrote "'..data..'" to '..path) -- log
 end
 
 -- load file
-function servertools.load_file(name, path, deserialize)
-  local f = io.open(path.."/"..name, "r") -- open file for reading
+function servertools.load_file(path, deserialize)
+  local f = io.open(path, "r") -- open file for reading
   local data = f:read() -- read and store file data in variable data
   if deserialize == true then local data = minetest.deserialize(data) end -- deserialize data
   return data -- return file contents
 end
 
 -- dofile
-function servertools.dofile(name, path)
+function servertools.dofile(path)
   -- check if file exists
-  if servertools.check_file(name, path) == true then
-    dofile(path.."/"..name)
+  if servertools.check_file(path) == true then
+    dofile(path)
     return true -- return true, successful
   else
-    servertools.log("File "..path.."/"..name.." does not exist.")
+    servertools.log("File "..path.." does not exist.")
     return false -- return false, unsuccessful
   end
 end
