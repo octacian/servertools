@@ -63,6 +63,23 @@ function servertools.load_file(path, deserialize)
   return data -- return file contents
 end
 
+-- write table to file
+function servertools.write_table(path, table)
+  local table = minetest.serialize(table) -- serialize table
+  local f = io.open(path, "w") -- open file for writing
+  f:write(table) -- write table
+  f:close() -- close file
+  servertools.log("Wrote table to "..path)
+end
+
+-- load table from file
+function servertools.load_table(path)
+  local f = io.open(path, "r") -- open file for reading
+  local table = minetest.deserialize(f:read()) -- deserialize and read table
+  f:close() -- close file
+  return table
+end
+
 -- dofile
 function servertools.dofile(path)
   -- check if file exists
