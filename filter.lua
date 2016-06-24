@@ -2,10 +2,10 @@
 --[[ language filter to automatically kick and or ban players.]]--
 
 -- load phrase table
-servertools.load_table(st.modpath.."/phrase.db")
+local word = servertools.load_table(st.modpath.."/phrase.db")
 
 -- if warnable word is used
-for i, phrase in ipairs(table) do
+for i, phrase in ipairs(word) do
   if phrase.type == "warn" then
     minetest.register_on_chat_message(function(name, message)
       local msg = message:lower()
@@ -23,7 +23,7 @@ for i, phrase in ipairs(table) do
 end
 
 -- if kickable word is used
-for i, phrase in ipairs(table) do
+for i, phrase in ipairs(word) do
   if phrase.type == "kick" then
     minetest.register_on_chat_message(function(name, message)
       local msg = message:lower()
@@ -43,7 +43,7 @@ for i, phrase in ipairs(table) do
 end
 
 -- if banable word is used
-for i, phrase in ipairs(table) do
+for i, phrase in ipairs(word) do
   if phrase.type == "ban" then
     minetest.register_on_chat_message(function(name, message)
       local msg = message:lower()
