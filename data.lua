@@ -64,10 +64,10 @@ function servertools.load_file(path, deserialize)
 end
 
 -- write table to file
-function servertools.write_table(path, table)
-  local table = minetest.serialize(table) -- serialize table
+function servertools.write_table(path, intable)
+  local intable = minetest.serialize(intable) -- serialize intable
   local f = io.open(path, "w") -- open file for writing
-  f:write(table) -- write table
+  f:write(intable) -- write intable
   f:close() -- close file
   servertools.log("Wrote table to "..path)
 end
@@ -75,9 +75,9 @@ end
 -- load table from file
 function servertools.load_table(path)
   local f = io.open(path, "r") -- open file for reading
-  local table = minetest.deserialize(f:read()) -- deserialize and read table
+  local externaltable = minetest.deserialize(f:read()) -- deserialize and read externaltable
   f:close() -- close file
-  return table
+  return externaltable
 end
 
 -- dofile
