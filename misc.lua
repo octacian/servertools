@@ -109,4 +109,24 @@ minetest.register_chatcommand("ip", {
 	func = servertools.get_ip,
 })
 
+-- [command] Bring Player to your Location - /bring player
+minetest.register_chatcommand("bring", {
+	privs = { bring = true },
+	description = "Bring a player to your location.",
+	params = "/bring <player> | player username",
+	func = function(name, param)
+		local bring = minetest.get_player_by_name(name) -- get player who executed command
+		local pos = bring:getpos() -- get bring position
+		local player = minetest.get_player_by_name(param) -- get player to teleport
+		-- check if player is logged in or not an IRC user
+		if not player then
+			minetest.chat_send_player(name, param.." is not a valid player.")
+		else
+			player:setpos(pos) -- set position
+			minetest.chat_send_player(name, "Brought "..param..".") -- notify player
+			servertools.log(name.." brought "..param.." to "..pos.x..", "..pos.y..", "..pos.z..".") -- log
+		end
+	end
+})
+
 minetest.log("action", "[ServerTools] Miscellaneous Module Loaded") --print to log module loaded

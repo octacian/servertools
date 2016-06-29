@@ -18,6 +18,7 @@ As this mod grows and more features are added, the commands section below will b
 * `/evening`: set time to evening. Privileges: `settime`.
 * `/night`: set time to night. Privileges: `settime`.
 * `/update`: place/update a node at a coordinate. Privileges: `update`.
+* `/bring` : bring player to your location. Privileges: `bring`.
 
 ### Installation and Updates
 Unzip the archive, rename the folder to servertools and place it in `minetest/mods` or in the mods folder of the subgame in which you wish to use ServerTools.
