@@ -50,7 +50,7 @@ for i, phrase in ipairs(word) do
       -- ignore commands
       if message:sub(1, 1) ~= "/" then
         -- filter for word(s)
-        if msg:find(word.ban) ~= nil then
+        if msg:find(phrase.word) ~= nil then
           -- ban player
           xban.ban_player(name, "servertools:filter", "5h", "Please use only appropriate and clean language in the public chat. Players, especially those that are younger, do not need to be hearing or using such language.")
           minetest.chat_send_all("*** Banned"..name.." for using innappropriate language (5 hour ban).") -- print to chat
