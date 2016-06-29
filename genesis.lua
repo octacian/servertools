@@ -17,7 +17,7 @@ minetest.register_chatcommand("setgenesis", {
 		minetest.setting_set("static_genesis", pos_str)
 
 		--Print to Log
-		minetest.log("action", "[ServerTools] Genesis point set to position "..pos_str.." by "..name) --print to log
+		servertools.log("[ServerTools] Genesis point set to position "..pos_str.." by "..name) --print to log
 		--Notify admin who set genesis.
 		return true, "Genesis point set to position "..pos_str
 	end,
@@ -63,11 +63,11 @@ minetest.register_chatcommand("genesis", {
 			return false, "Static genesis point is not set or wrongly formatted."
 		end
 		--Print to Log
-		minetest.log("action", "[ServerTools] "..name.." transported to the genesis at "..genesis) --print to log
+		servertools.log("[ServerTools] "..name.." transported to the genesis at "..genesis) --print to log
 
 		player:setpos(genesis_pos)
 		return true, "Initializing transportation to the Genesis point..."
 	end
 })
 
-minetest.log("action", "[ServerTools] Genesis Module Loaded") --print to log module loaded
+servertools.log("[ServerTools] Genesis Module Loaded") --print to log module loaded

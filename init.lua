@@ -21,4 +21,4 @@ dofile(modpath.."/genesis.lua")
 dofile(modpath.."/misc.lua")
 dofile(modpath.."/filter.lua")
 
-minetest.log("action", "[ServerTools] Enabled Modules Loaded!") --print to log enabled modules loaded
+servertools.log("[ServerTools] Enabled Modules Loaded!") --print to log enabled modules loaded
