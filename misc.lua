@@ -42,11 +42,11 @@ minetest.register_chatcommand("morning", {
 	privs = {settime = true},
 	description = "Set time to morning",
 	func = function(name, param)
-		local player = minetest.env:get_player_by_name(name)
+		local player = minetest.get_player_by_name(name)
 		if not player then
 			return
 		end
-		minetest.env:set_timeofday(0.22)
+		minetest.set_timeofday(0.22)
 		minetest.log("action", "[ServerTools] "..player:get_player_name().." set the time to morning.") --print to log
 	end,
 })
@@ -56,11 +56,11 @@ minetest.register_chatcommand("noon", {
 	privs = {settime = true},
 	description = "Set time to noon",
 	func = function(name, param)
-		local player = minetest.env:get_player_by_name(name)
+		local player = minetest.get_player_by_name(name)
 		if not player then
 			return
 		end
-		minetest.env:set_timeofday(0.5)
+		minetest.set_timeofday(0.5)
 		minetest.log("action", "[ServerTools] "..player:get_player_name().." set the time to noon.") --print to log
 	end,
 })
@@ -70,11 +70,11 @@ minetest.register_chatcommand("evening", {
 	privs = {settime = true},
 	description = "Set time to evening",
 	func = function(name, param)
-		local player = minetest.env:get_player_by_name(name)
+		local player = minetest.get_player_by_name(name)
 		if not player then
 			return
 		end
-		minetest.env:set_timeofday(0.77)
+		minetest.set_timeofday(0.77)
 		minetest.log("action", "[ServerTools] "..player:get_player_name().." set the time to evening.") --print to log
 	end,
 })
@@ -84,11 +84,11 @@ minetest.register_chatcommand("night", {
 	privs = {settime = true},
 	description = "Set time to night",
 	func = function(name, param)
-		local player = minetest.env:get_player_by_name(name)
+		local player = minetest.get_player_by_name(name)
 		if not player then
 			return
 		end
-		minetest.env:set_timeofday(0)
+		minetest.set_timeofday(0)
 		minetest.log("action", "[ServerTools] "..player:get_player_name().." set the time to night.") --print to log
 	end,
 })
