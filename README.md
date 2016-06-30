@@ -32,4 +32,4 @@ To update, periodically check the Gogs repository and download either the latest
 
 The mod will soon include an auto update function, which will work on its own so long as you have internet.
 
-**Dependencies:** default (no dependencies)
+**Dependencies:** default, datalib, xban2

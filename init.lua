@@ -13,7 +13,6 @@ function servertools.log(content, log_type)
 end
 
 -- load default modules
-dofile(modpath.."/data.lua")
 dofile(modpath.."/functions.lua")
 dofile(modpath.."/privs.lua")
 

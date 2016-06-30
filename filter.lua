@@ -2,7 +2,7 @@
 --[[ language filter to automatically kick and or ban players.]]--
 
 -- load phrase table
-local word = servertools.load_table(st.modpath.."/phrase.db")
+local word = datalib.table.load(st.modpath.."/phrase.db")
 
 -- if warnable word is used
 for i, phrase in ipairs(word) do
