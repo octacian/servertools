@@ -19,5 +19,6 @@ dofile(modpath.."/privs.lua")
 dofile(modpath.."/genesis.lua")
 dofile(modpath.."/misc.lua")
 dofile(modpath.."/filter.lua")
+dofile(modpath.."/nodes.lua")
 
 servertools.log("[ServerTools] Enabled Modules Loaded!") --print to log enabled modules loaded
