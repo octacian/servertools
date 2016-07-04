@@ -1,7 +1,10 @@
---Set Genesis Command
+-- create file
+datalib.create(datalib.datapath.."/genesis.txt")
+
+-- Set Genesis Command
 minetest.register_chatcommand("setgenesis", {
 	params = "",
-	privs = {admin = true},
+	privs = {servertools = true},
 	description = "Set the Genesis point (beginning).",
 	func = function(name, param)
 		--Check for proper player [forbids console commands, not really needed]
@@ -14,7 +17,7 @@ minetest.register_chatcommand("setgenesis", {
 		pos.y = pos.y + 0.5
 
 		local pos_str = minetest.pos_to_string(pos)
-		minetest.setting_set("static_genesis", pos_str)
+		datalib.write(datalib.datapath.."/genesis.txt", pos_str, false)
 
 		--Print to Log
 		servertools.log("[ServerTools] Genesis point set to position "..pos_str.." by "..name) --print to log
@@ -23,7 +26,7 @@ minetest.register_chatcommand("setgenesis", {
 	end,
 })
 
---Make sure player initializes at set genesis when he hurts himself badly if it exists.
+-- Make sure player initializes at set genesis when he hurts himself badly if it exists.
 minetest.register_on_respawnplayer(function(player)
 	if not player then
 		return
@@ -35,7 +38,7 @@ minetest.register_on_respawnplayer(function(player)
 	player:setpos(genesis_pos)
 end)
 
---Make sure player initializes at set genesis when he joins if it exists.
+-- Make sure player initializes at set genesis when he joins if it exists.
 minetest.register_on_newplayer(function(player)
 	if not player then
 		return
@@ -47,7 +50,7 @@ minetest.register_on_newplayer(function(player)
 	player:setpos(genesis_pos)
 end)
 
---Make /genesis go to a genesis point set by admins if it exists.
+-- Make /genesis go to a genesis point set by admins if it exists.
 minetest.register_chatcommand("genesis", {
 	params = "",
 	privs = {},
@@ -57,10 +60,10 @@ minetest.register_chatcommand("genesis", {
 		if not player then
 			return
 		end
-		local genesis = minetest.setting_get("static_genesis")
+		local genesis = datalib.read(datalib.datapath.."/genesis.txt", false)
 		local genesis_pos = minetest.string_to_pos(genesis)
 		if not genesis_pos then
-			return false, "Static genesis point is not set or wrongly formatted."
+			return false, "Static genesis point is not set or improperly formatted."
 		end
 		--Print to Log
 		servertools.log("[ServerTools] "..name.." transported to the genesis at "..genesis) --print to log
