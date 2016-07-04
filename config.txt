@@ -1,0 +1,10 @@
+-- servertools config --
+
+-- genesis module (like static spawn, default: true)
+genesis = true
+
+-- misc commands module (default: true)
+misc = true
+
+-- chat filter (default: true)
+filter = true

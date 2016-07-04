@@ -15,10 +15,14 @@ end
 -- load default modules
 dofile(modpath.."/functions.lua")
 dofile(modpath.."/privs.lua")
-
-dofile(modpath.."/genesis.lua")
-dofile(modpath.."/misc.lua")
-dofile(modpath.."/filter.lua")
 dofile(modpath.."/nodes.lua")
+
+-- read config
+datalib.dofile(modpath.."/config.txt")
+
+-- optional modules
+if genesis == true then dofile(modpath.."/genesis.lua") end
+if misc == true then dofile(modpath.."/misc.lua") end
+if filter == true then dofile(modpath.."/filter.lua") end
 
 servertools.log("[ServerTools] Enabled Modules Loaded!") --print to log enabled modules loaded
