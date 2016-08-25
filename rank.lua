@@ -113,23 +113,20 @@ end)
 
 -- on chat message
 minetest.register_on_chat_message(function(name, message)
-  for _,i in ipairs(mem) do
-    if i.name == name then
-      for _,i2 in ipairs(st.ranks) do
-        if i.rank == i2.name then
-          if i2.prefix ~= "" and i2.colour then
-            minetest.chat_send_all(core.colorize(i2.colour, i2.prefix).." <"..name.."> "..message)
-          elseif i2.prefix ~= "" and not i2.colour or i2.colour == "" then
-            minetest.chat_send_all(i2.prefix.." <"..name.."> "..message)
-          else
-            minetest.chat_send_all("<"..name.."> "..message)
-          end
-        end
-        break -- exit loop
-      end
-    end
-    break -- exit loop
+  local rank = servertools.get_player_rank(name) -- get rank
+  local prefix = servertools.get_rank_value(rank, 'prefix') -- get prefix
+  local colour = servertools.get_rank_value(rank, 'colour') -- get prefix
+  if not prefix or prefix == '' then prefix = nil end -- check prefix
+
+  -- send message
+  if prefix and colour then
+    minetest.chat_send_all(core.colorize(colour, prefix).." <"..name.."> "..message)
+  elseif prefix and not colour then
+    minetest.chat_send_all(prefix.." <"..name.."> "..message)
+  elseif not prefix and not colour then
+    return false -- show message normally
   end
+
   return true -- prevent message from being shown
 end)
 
