@@ -26,6 +26,16 @@ function servertools.get_rank_privs(rank)
   end
 end
 
+-- get rank value
+function servertools.get_rank_value(rank, value)
+  for _,i in ipairs(st.ranks) do -- find rank
+    if i.name == rank then
+      -- if value exists, return
+      if i[value] then return i[value] end -- return value
+    end
+  end
+end
+
 -- does rank have capability to
 function servertools.player_can(player, capability)
   -- find rank entry
