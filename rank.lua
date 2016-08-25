@@ -137,34 +137,37 @@ minetest.register_chatcommand("rank", {
       -- if not newrank, return rank
       if target and not newrank then
         local rank = servertools.get_player_rank(target)
-        minetest.chat_send_player(name, target.." is ranked as a "..rank..".")
+        -- if not rank, return error
+        if not rank then
+          return false, "Invalid player ("..target..")"
+        else
+          return true, target.." is ranked as a "..rank.."."
+        end
       elseif not newrank and not target then -- if no newrank and target given, return current player rank
-        return true, name.." is ranked as a "..servertools.get_player_rank(name).."."
+        return true, "You are ranked as a "..servertools.get_player_rank(name).."."
       elseif newrank and not target then -- if newrank and no target, require target
         return true, "Please enter a valid target username and new rank."
       elseif newrank and target then -- if fields available, continue operation
         -- if new rank does not exist, return error
         local set_rank = servertools.set_player_rank(target, newrank)
         if set_rank then -- if unsuccessful, return error
-          return false, "Error while setting player rank: "..set_rank
+          return false, set_rank
         else -- else, return success message
           return true, target.."'s rank set to "..newrank.."."
         end
-      else
-        return true, "An error occurred while running the command."
       end
     else -- else, limit functionality
       if target and newrank then
         local missing
         if not servertools.player_can("getrank") then missing = "getrank, setrank" else missing = "setrank" end
-        return true, "You don't have the rankPriv to execute this command. (missing: "..missing..")"
+        return false, "You don't have the rankPriv to execute this command. (missing: "..missing..")"
       elseif not target and newrank then
-        return true, "Please enter a target player."
+        return false, "Please enter a target player."
       elseif target and not newrank then
         if servertools.player_can("getrank") then
           return true, target.." is ranked as a "..servertools.get_player_rank(target).."."
         else
-          return true, "You don't have the rankPriv to execute this command. (missing: getrank)"
+          return false, "You don't have the rankPriv to execute this command. (missing: getrank)"
         end
       elseif not target and not newrank then
         return true, "You are ranked as a "..servertools.get_player_rank(name).."."
@@ -189,7 +192,7 @@ for _,i in ipairs(st.ranks) do
           -- if error while setting rank, return message
           local set_rank = servertools.set_player_rank(param, i.name)
           if set_rank then
-            return false, "Error while setting player rank: "..set_rank
+            return false, set_rank
           else -- else, return success message
             return true, param.."'s rank set to "..i.name.."."
           end
