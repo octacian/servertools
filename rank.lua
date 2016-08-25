@@ -172,3 +172,33 @@ minetest.register_chatcommand("rank", {
     end
   end,
 })
+
+-- rank-specific commands
+for _,i in ipairs(st.ranks) do
+  -- if command specified, register
+  if i.cmd then
+    -- register
+    minetest.register_chatcommand(i.cmd, {
+      description = "Set player rank to "..i.name..".",
+      params = "<player>",
+      func = function(name, param)
+        -- if player can set rank, move on
+        if servertools.player_can(name, "setrank") then
+          -- if not param, return usage
+          if not param then return "Usage: /"..i.cmd.." <player>" end
+          -- if error while setting rank, return message
+          local set_rank = servertools.set_player_rank(param, i.name)
+          if set_rank then
+            return false, "Error while setting player rank: "..set_rank
+          else -- else, return success message
+            return true, param.."'s rank set to "..i.name.."."
+          end
+        else
+          local missing
+          if not servertools.player_can("getrank") then missing = "getrank, setrank" else missing = "getrank" end
+          return false, "You don't have the rankPriv to execute this command. (missing: "..missing..")"
+        end
+      end,
+    })
+  end
+end
