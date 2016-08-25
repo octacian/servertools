@@ -76,7 +76,7 @@ function servertools.set_player_rank(from, name, newrank)
   end
 
   -- check level
-  if servertools.get_rank_level(servertools.get_player_rank(from)) < servertools.get_rank_level(newrank) then
+  if servertools.get_rank_level(servertools.get_player_rank(from)) <= servertools.get_rank_level(newrank) and servertools.get_player_rank(from) ~= "owner" then
     return "You cannot set the rank of "..name.." to a rank of higher level than your own."
   end
 
