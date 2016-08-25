@@ -113,6 +113,17 @@ end)
 
 -- on chat message
 minetest.register_on_chat_message(function(name, message)
+  local players = {} -- players table
+  local p1 = minetest.get_connected_players() -- get players
+  -- get player names
+  for _,i in pairs(p1) do
+    local player = i:get_player_name() -- get player name
+    -- if not player who triggered call back, insert name record
+    if player ~= name then
+      table.insert(players, player) -- insert record
+    end
+  end
+
   local rank = servertools.get_player_rank(name) -- get rank
   local prefix = servertools.get_rank_value(rank, 'prefix') -- get prefix
   local colour = servertools.get_rank_value(rank, 'colour') -- get prefix
@@ -120,9 +131,15 @@ minetest.register_on_chat_message(function(name, message)
 
   -- send message
   if prefix and colour then
-    minetest.chat_send_all(core.colorize(colour, prefix).." <"..name.."> "..message)
+    -- send message to players
+    for _,i in pairs(players) do
+      minetest.chat_send_player(i, core.colorize(colour, prefix).." <"..name.."> "..message)
+    end
   elseif prefix and not colour then
-    minetest.chat_send_all(prefix.." <"..name.."> "..message)
+    -- send message to players
+    for _,i in pairs(players) do
+      minetest.chat_send_player(i, prefix.." <"..name.."> "..message)
+    end
   elseif not prefix and not colour then
     return false -- show message normally
   end
