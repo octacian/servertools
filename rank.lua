@@ -1,6 +1,7 @@
 -- servertools/rank.lua
 -- variables
 local modpath = servertools.modpath
+dofile(modpath.."/config.txt")
 
 -- read files
 datalib.dofile(modpath.."/rank.conf")
@@ -126,40 +127,45 @@ end)
 
 
 -- on chat message
-minetest.register_on_chat_message(function(name, message)
-  local players = {} -- players table
-  local p1 = minetest.get_connected_players() -- get players
-  -- get player names
-  for _,i in pairs(p1) do
-    local player = i:get_player_name() -- get player name
-    -- if not player who triggered call back, insert name record
-    if player ~= name then
-      table.insert(players, player) -- insert record
-    end
-  end
+if rank_chat == true then
+  minetest.register_on_chat_message(function(name, message)
+    -- ignore chatcommands
+    if message:sub(1, 1) ~= "/" then
+      local players = {} -- players table
+      local p1 = minetest.get_connected_players() -- get players
+      -- get player names
+      for _,i in pairs(p1) do
+        local player = i:get_player_name() -- get player name
+        -- if not player who triggered call back, insert name record
+        if player ~= name then
+          table.insert(players, player) -- insert record
+        end
+      end
 
-  local rank = servertools.get_player_rank(name) -- get rank
-  local prefix = servertools.get_rank_value(rank, 'prefix') -- get prefix
-  local colour = servertools.get_rank_value(rank, 'colour') -- get prefix
-  if not prefix or prefix == '' then prefix = nil end -- check prefix
+      local rank = servertools.get_player_rank(name) -- get rank
+      local prefix = servertools.get_rank_value(rank, 'prefix') -- get prefix
+      local colour = servertools.get_rank_value(rank, 'colour') -- get prefix
+      if not prefix or prefix == '' then prefix = nil end -- check prefix
 
-  -- send message
-  if prefix and colour then
-    -- send message to players
-    for _,i in pairs(players) do
-      minetest.chat_send_player(i, core.colorize(colour, prefix).." <"..name.."> "..message)
-    end
-  elseif prefix and not colour then
-    -- send message to players
-    for _,i in pairs(players) do
-      minetest.chat_send_player(i, prefix.." <"..name.."> "..message)
-    end
-  elseif not prefix and not colour then
-    return false -- show message normally
-  end
+      -- send message
+      if prefix and colour then
+        -- send message to players
+        for _,i in pairs(players) do
+          minetest.chat_send_player(i, core.colorize(colour, prefix).." <"..name.."> "..message)
+        end
+      elseif prefix and not colour then
+        -- send message to players
+        for _,i in pairs(players) do
+          minetest.chat_send_player(i, prefix.." <"..name.."> "..message)
+        end
+      elseif not prefix and not colour then
+        return false -- show message normally
+      end
 
-  return true -- prevent message from being shown
-end)
+      return true -- prevent message from being shown
+    end
+  end)
+end
 
 -- COMMANDS
 -- /rank
@@ -215,31 +221,33 @@ minetest.register_chatcommand("rank", {
 })
 
 -- rank-specific commands
-for _,i in ipairs(st.ranks) do
-  -- if command specified, register
-  if i.cmd then
-    -- register
-    minetest.register_chatcommand(i.cmd, {
-      description = "Set player rank to "..i.name..".",
-      params = "<player>",
-      func = function(name, param)
-        -- if player can set rank, move on
-        if servertools.player_can(name, "setrank") then
-          -- if not param, return usage
-          if not param then return "Usage: /"..i.cmd.." <player>" end
-          -- if error while setting rank, return message
-          local set_rank = servertools.set_player_rank(name, param, i.name)
-          if set_rank then
-            return false, set_rank
-          else -- else, return success message
-            return true, param.."'s rank set to "..i.name.."."
+if rank_specific_commands == true then
+  for _,i in ipairs(st.ranks) do
+    -- if command specified, register
+    if i.cmd then
+      -- register
+      minetest.register_chatcommand(i.cmd, {
+        description = "Set player rank to "..i.name..".",
+        params = "<player>",
+        func = function(name, param)
+          -- if player can set rank, move on
+          if servertools.player_can(name, "setrank") then
+            -- if not param, return usage
+            if not param then return "Usage: /"..i.cmd.." <player>" end
+            -- if error while setting rank, return message
+            local set_rank = servertools.set_player_rank(name, param, i.name)
+            if set_rank then
+              return false, set_rank
+            else -- else, return success message
+              return true, param.."'s rank set to "..i.name.."."
+            end
+          else
+            local missing
+            if not servertools.player_can("getrank") then missing = "getrank, setrank" else missing = "getrank" end
+            return false, "You don't have the rankPriv to execute this command. (missing: "..missing..")"
           end
-        else
-          local missing
-          if not servertools.player_can("getrank") then missing = "getrank, setrank" else missing = "getrank" end
-          return false, "You don't have the rankPriv to execute this command. (missing: "..missing..")"
-        end
-      end,
-    })
+        end,
+      })
+    end
   end
 end

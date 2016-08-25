@@ -24,6 +24,6 @@ datalib.dofile(modpath.."/config.txt")
 if genesis == true then dofile(modpath.."/genesis.lua") end
 if misc == true then dofile(modpath.."/misc.lua") end
 if filter == true then dofile(modpath.."/filter.lua") end
-dofile(modpath.."/rank.lua")
+if rank == true then dofile(modpath.."/rank.lua") end
 
 servertools.log("[ServerTools] Enabled Modules Loaded!") --print to log enabled modules loaded

@@ -8,3 +8,13 @@ misc = true
 
 -- chat filter (default: true)
 filter = true
+
+----- RANKING SYSTEM -----
+-- enable ranking (default: true)
+rank = true
+
+-- rank chat prefixes (default: true)
+rank_chat = true
+
+-- rank specific commands (default: true)
+rank_specific_commands = true
