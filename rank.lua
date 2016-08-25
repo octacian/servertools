@@ -26,6 +26,15 @@ function servertools.get_rank_privs(rank)
   end
 end
 
+-- get rank level
+function servertools.get_rank_level(rank)
+  for _,i in ipairs(st.ranks) do -- find rank
+    if i.name == rank then
+      return i.level -- return level
+    end
+  end
+end
+
 -- get rank value
 function servertools.get_rank_value(rank, value)
   for _,i in ipairs(st.ranks) do -- find rank
@@ -52,7 +61,7 @@ function servertools.player_can(player, capability)
 end
 
 -- set rank
-function servertools.set_player_rank(name, newrank)
+function servertools.set_player_rank(from, name, newrank)
   -- check params
   if not servertools.get_player_rank(name) then
     return "Invalid player ("..name..")"
@@ -64,6 +73,11 @@ function servertools.set_player_rank(name, newrank)
   -- check that rank exists
   if not rank_privs or type(rank_privs) ~= "table" then
     return "Rank nonexistent."
+  end
+
+  -- check level
+  if servertools.get_rank_level(servertools.get_player_rank(from)) < servertools.get_rank_level(newrank) then
+    return "You cannot set the rank of "..name.." to a rank of higher level than your own."
   end
 
   -- update player privileges
@@ -173,7 +187,7 @@ minetest.register_chatcommand("rank", {
         return true, "Please enter a valid target username and new rank."
       elseif newrank and target then -- if fields available, continue operation
         -- if new rank does not exist, return error
-        local set_rank = servertools.set_player_rank(target, newrank)
+        local set_rank = servertools.set_player_rank(name, target, newrank)
         if set_rank then -- if unsuccessful, return error
           return false, set_rank
         else -- else, return success message
@@ -214,7 +228,7 @@ for _,i in ipairs(st.ranks) do
           -- if not param, return usage
           if not param then return "Usage: /"..i.cmd.." <player>" end
           -- if error while setting rank, return message
-          local set_rank = servertools.set_player_rank(param, i.name)
+          local set_rank = servertools.set_player_rank(name, param, i.name)
           if set_rank then
             return false, set_rank
           else -- else, return success message
