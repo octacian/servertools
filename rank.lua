@@ -36,6 +36,15 @@ function servertools.get_rank_level(rank)
   end
 end
 
+-- get highest rank level
+function servertools.get_rank_high(list)
+  local high = 0 -- high variable
+  for _,i in ipairs(st.ranks) do -- iterate through st.ranks
+    if i.level > high then high = i.level end -- if level is greater than high, set high to value of level
+  end
+  return high -- return high value
+end
+
 -- get rank value
 function servertools.get_rank_value(rank, value)
   for _,i in ipairs(st.ranks) do -- find rank
@@ -76,9 +85,16 @@ function servertools.set_player_rank(from, name, newrank)
     return "Rank nonexistent."
   end
 
+  -- define variables for next operation
+  local from_rank = servertools.get_player_rank(from)
+  local from_level = servertools.get_rank_level(from_rank)
+  local new_level = servertools.get_rank_level(newrank)
+  local level_high = servertools.get_rank_high()
   -- check level
-  if servertools.get_rank_level(servertools.get_player_rank(from)) <= servertools.get_rank_level(newrank) and servertools.get_player_rank(from) ~= "owner" then
+  if from_level < new_level and from_level ~= level_high then
     return "You cannot set the rank of "..name.." to a rank of higher level than your own."
+  elseif from_level == new_level and from_level ~= level_high then
+    return "You cannot set the rank of "..name.." to your own."
   end
 
   -- update player privileges
