@@ -1,11 +1,18 @@
 -- servertools/rank.lua
 -- variables
-local modpath = servertools.modpath
+local modpath = servertools.modpath -- modpath pointer
+local worldpath = minetest.get_worldpath() -- get worldpath
+local rankDB = worldpath.."/rank.db" -- rankDB path
 dofile(modpath.."/config.txt")
+
+-- create rankDB file
+if datalib.exists(rankDB) == false then
+  datalib.create(rankDB)
+end
 
 -- read files
 datalib.dofile(modpath.."/rank.conf")
-local mem = datalib.table.read(modpath.."/rank.db")
+local mem = datalib.table.read(rankDB)
 -- if not mem, create blank table
 if not mem or type(mem) ~= "table" then mem = {} end
 
@@ -104,7 +111,7 @@ function servertools.set_player_rank(from, name, newrank)
   for _, i in ipairs(mem) do
     if i.name == name then -- find in rankDB
       i.rank = newrank -- set new rank value
-      datalib.table.write(modpath.."/rank.db", mem) -- write updated table
+      datalib.table.write(rankDB, mem) -- write updated table
       servertools.log(name.."'s rank set to "..newrank..".")
     end
   end
@@ -119,7 +126,7 @@ minetest.register_on_prejoinplayer(function(name, ip)
     if name == minetest.setting_get("name") then rank = "owner" else rank = st.ranks.default end -- set default rank
     local insert = { name = name, rank = rank } -- data in proper format for insertion
     table.insert(mem, insert) -- insert data
-    datalib.table.write(modpath.."/rank.db", mem) -- write table
+    datalib.table.write(rankDB, mem) -- write table
     servertools.log("Giving new player "..name.." the "..rank.." rank.") -- log
   end
 
