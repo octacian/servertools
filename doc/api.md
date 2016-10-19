@@ -1,5 +1,5 @@
 # ServerTools API
-This documentation is also available at the official [ServerTools Wiki](http://208.69.243.45:3000/octacian/servertools/wiki). Divided into several parts, one for each main topic, this documentation includes all functions available for use from other mods.
+This documentation is also available at the official [ServerTools Wiki](https://endev.xyz/octacian/servertools/wiki). Divided into several parts, one for each main topic, this documentation includes all functions available for use from other mods.
 
 **Note:** instead of using the prefix `servertools` when calling any of the functions or variables documented below, you may use `st.`
 
@@ -29,39 +29,3 @@ Get the public IP address of any `player`. This function could be exploited by m
 **Usage:** `servertools.update_node(name, <new_nodestring> <x> <y> <z>)`
 
 Sets the node at coordinates to the specified item string. Do not put commas between parameters, and the new itemstring may only point to a node (not a tool or item). Entering incorrect data triggers a detailed error log. Be careful with this function, as it can destroy and place nodes without warning.
-
-### get_player_rank
-**Module:** `ranking`
-**Usage:**  `servertools.get_player_rank(name)`
-
-Returns the rank of player specified by `name`.
-
-### get_rank_privs
-**Module:** `ranking`
-**Usage:** `servertools.get_rank_privs(rank)`
-
-Returns the privileges of the rank (`rank`) as a table.
-
-### get_rank_level
-**Module:** `ranking`
-**Usage:** `servertools.get_rank_level(rank)`
-
-Returns integer value indicating the rank (`rank`).
-
-### get_rank_value
-**Module:** `ranking`
-**Usage:** `servertools.get_rank_value(rank, value)`
-
-Get any value (`value`) for the rank (`rank`).
-
-### player_can
-**Module:** `ranking`
-**Usage:** `servertools.player_can(player, capability)`
-
-Check if a player (`player`) has a specific capability (`capability`).
-
-### set_player_rank
-**Module:** `ranking`
-**Usage:** `servertools.set_player_rank(from, name, newrank)`
-
-Set the rank (`newrank`) of a player (`name`). Note that `from` must contain the name of a valid player.
