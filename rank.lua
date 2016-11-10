@@ -77,6 +77,31 @@ function servertools.player_can(player, capability)
   end
 end
 
+-- update nametag
+function servertools.update_nametag(name)
+  local player = minetest.get_player_by_name(name) -- get player obj
+
+  local rank = servertools.get_player_rank(name) -- get rank
+  local prefix = servertools.get_rank_value(rank, 'prefix') -- get prefix
+  local colour = servertools.get_rank_value(rank, 'colour') -- get colour
+
+  local function getColour()
+    if not colour then return "#ffffff"
+    else return colour end
+  end
+
+  if not rank then return false end
+  if not prefix then local prefix = ""
+  else prefix = prefix.." " end
+
+  local colour = getColour()
+
+  player:set_nametag_attributes({
+    color = colour,
+    text = prefix..name,
+  })
+end
+
 -- set rank
 function servertools.set_player_rank(from, name, newrank)
   -- check params
@@ -106,7 +131,8 @@ function servertools.set_player_rank(from, name, newrank)
 
   -- update player privileges
   if minetest.set_player_privs(name, rank_privs) then return "Failed to set privileges." end -- unsuccessful
-  -- TODO: fix setting table value
+  -- update nametag
+  servertools.update_nametag(name)
   -- update database
   for _, i in ipairs(mem) do
     if i.name == name then -- find in rankDB
@@ -148,6 +174,10 @@ minetest.register_on_prejoinplayer(function(name, ip)
   end
 end)
 
+-- on join (nametag)
+minetest.register_on_joinplayer(function(player)
+  servertools.update_nametag(player:get_player_name()) -- update nametag
+end)
 
 -- on chat message
 if rank_chat == true then
