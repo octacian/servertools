@@ -18,3 +18,7 @@ rank_chat = true
 
 -- rank specific commands (default: true)
 rank_specific_commands = true
+
+----- WHITELIST -----
+-- enable whitelist (default: false)
+whitelist = true

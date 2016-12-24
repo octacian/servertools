@@ -25,5 +25,6 @@ if genesis == true then dofile(modpath.."/genesis.lua") end
 if misc == true then dofile(modpath.."/misc.lua") end
 if filter == true then dofile(modpath.."/filter.lua") end
 if rank == true then dofile(modpath.."/rank.lua") end
+if whitelist == true then dofile(modpath.."/whitelist.lua") end
 
 servertools.log("[ServerTools] Enabled Modules Loaded!") --print to log enabled modules loaded
