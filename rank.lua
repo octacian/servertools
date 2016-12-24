@@ -304,3 +304,5 @@ if rank_specific_commands == true then
     end
   end
 end
+
+servertools.log("Rank Module Loaded") -- print to log module loaded

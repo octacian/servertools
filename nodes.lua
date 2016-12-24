@@ -103,3 +103,5 @@ minetest.register_node("servertools:air_solid_nobuild_pointable", {
   diggable = false,
 	groups = {not_in_creative_inventory = 1},
 })
+
+servertools.log("Nodes Loaded")

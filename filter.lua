@@ -34,7 +34,7 @@ for i, phrase in ipairs(word) do
           -- kick player
           minetest.kick_player(name, 'Please do not use emotional or innappropriate words, including "'..phrase.word..'," in the chat.')
           minetest.chat_send_all("*** Kicked "..name.." for using innappropriate language.") -- print to chat
-          servertools.log("[ServerTools] Kicked "..name.." for using innappropriate language.") -- print to log
+          servertools.log("Kicked "..name.." for using innappropriate language.") -- print to log
           return true -- prevent message from showing in chat
         end
       end
@@ -54,10 +54,12 @@ for i, phrase in ipairs(word) do
           -- ban player
           xban.ban_player(name, "servertools:filter", "5h", 'Used emotional or innappropriate words, including "'..phrase.word..'," in the chat.')
           minetest.chat_send_all("*** Banned"..name.." for using innappropriate language (5 hours).") -- print to chat
-          servertools.log("[ServerTools] Banned "..name.." for using innappropriate language (5 hours).") -- print to log
+          servertools.log("Banned "..name.." for using innappropriate language (5 hours).") -- print to log
           return true -- prevent message from showing in chat
         end
       end
     end)
   end
 end
+
+servertools.log("Filter Module Loaded")

@@ -20,7 +20,7 @@ minetest.register_chatcommand("setgenesis", {
 		datalib.write(datalib.datapath.."/genesis.txt", pos_str, false)
 
 		--Print to Log
-		servertools.log("[ServerTools] Genesis point set to position "..pos_str.." by "..name) --print to log
+		servertools.log("Genesis point set to position "..pos_str.." by "..name) --print to log
 		--Notify admin who set genesis.
 		return true, "Genesis point set to position "..pos_str
 	end,
@@ -66,11 +66,11 @@ minetest.register_chatcommand("genesis", {
 			return false, "Static genesis point is not set or improperly formatted."
 		end
 		--Print to Log
-		servertools.log("[ServerTools] "..name.." transported to the genesis at "..genesis) --print to log
+		servertools.log(name.." transported to the genesis at "..genesis) --print to log
 
 		player:setpos(genesis_pos)
 		return true, "Initializing transportation to the Genesis point..."
 	end
 })
 
-servertools.log("[ServerTools] Genesis Module Loaded") --print to log module loaded
+servertools.log("Genesis Module Loaded") --print to log module loaded

@@ -17,19 +17,19 @@ minetest.register_chatcommand("heal", {
 		local player = minetest.get_player_by_name(name)
 		player:set_hp(20)
 		minetest.chat_send_player(name, "You have been healed.")
-		servertools.log("[ServerTools] "..name.." healed themself.") --print to log
+		servertools.log(name.." healed themself.") --print to log
 	else
 		--If he is healing someone else, check and see if that someone exists.
 		local player = minetest.get_player_by_name(param)
 		if player == "" or player == nil then
 			minetest.chat_send_player(name, "Invalid player!")
-			servertools.log("[ServerTools] "..name.." attempted to heal invalid player "..param) --print to log
+			servertools.log(name.." attempted to heal invalid player "..param) --print to log
 		else
 			--If player exists, set his HP to 20 and notify him and the sender.
 			player:set_hp(20)
 			minetest.chat_send_player(param, "You have been healed.")
 			minetest.chat_send_player(name, "You have healed "..param.."")
-			servertools.log("[ServerTools] "..name.." healed "..param) --print to log
+			servertools.log(name.." healed "..param) --print to log
 		end
 	end
 end
@@ -47,7 +47,7 @@ minetest.register_chatcommand("morning", {
 			return
 		end
 		minetest.set_timeofday(0.22)
-		servertools.log("[ServerTools] "..player:get_player_name().." set the time to morning.") --print to log
+		servertools.log(player:get_player_name().." set the time to morning.") --print to log
 	end,
 })
 -- [command] Noon (0.5) - /noon
@@ -61,7 +61,7 @@ minetest.register_chatcommand("noon", {
 			return
 		end
 		minetest.set_timeofday(0.5)
-		servertools.log("[ServerTools] "..player:get_player_name().." set the time to noon.") --print to log
+		servertools.log(player:get_player_name().." set the time to noon.") --print to log
 	end,
 })
 -- [command] Evening (0.77) - /evening
@@ -75,7 +75,7 @@ minetest.register_chatcommand("evening", {
 			return
 		end
 		minetest.set_timeofday(0.77)
-		servertools.log("[ServerTools] "..player:get_player_name().." set the time to evening.") --print to log
+		servertools.log(player:get_player_name().." set the time to evening.") --print to log
 	end,
 })
 -- [command] Night (0) - /night
@@ -89,7 +89,7 @@ minetest.register_chatcommand("night", {
 			return
 		end
 		minetest.set_timeofday(0)
-		servertools.log("[ServerTools] "..player:get_player_name().." set the time to night.") --print to log
+		servertools.log(player:get_player_name().." set the time to night.") --print to log
 	end,
 })
 
@@ -129,4 +129,4 @@ minetest.register_chatcommand("bring", {
 	end
 })
 
-servertools.log("[ServerTools] Miscellaneous Module Loaded") --print to log module loaded
+servertools.log("Miscellaneous Module Loaded") --print to log module loaded
